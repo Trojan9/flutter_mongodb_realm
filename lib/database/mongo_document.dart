@@ -23,7 +23,12 @@ class MongoDocument {
       //_map.addAll(map);
       //_map.addEntries(map.entries);
       for (String key in map.keys) {
-        _map[key] = map[key];
+        // convert dateTime to isoString for encoding
+        if (map[key] is DateTime) {
+          _map[key] = DateTime.parse(map[key].toString()).toIso8601String();
+        } else {
+          _map[key] = map[key];
+        }
       }
     }
   }
