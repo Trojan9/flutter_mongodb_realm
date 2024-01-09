@@ -57,8 +57,15 @@ class MongoDocument {
           if (map2[0].value is int)
             result =
                 DateTime.fromMillisecondsSinceEpoch(map2[0].value, isUtc: true);
-          else if (map2[0].value is String)
+          else if (map2[0].value is String) if (map2[0]
+                  .value[map2[0].value.length - 1]
+                  .toString() ==
+              "Z") {
+            var val = map2[0].value.substring(0, map2[0].value.length - 1);
+            result = DateTime.tryParse(val) ?? val;
+          } else {
             result = DateTime.tryParse(map2[0].value) ?? map2[0].value;
+          }
           break;
       }
     }
