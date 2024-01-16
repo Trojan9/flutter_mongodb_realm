@@ -54,27 +54,20 @@ class MongoDocument {
 
         // Convert 'Date' type
         case "date":
-          if (map2[0].value is int) {
-            if ((DateTime.fromMillisecondsSinceEpoch(map2[0].value, isUtc: true)
-                    .toString())
-                .endsWith("Z")) {
-              var timeString = (DateTime.fromMillisecondsSinceEpoch(
-                      map2[0].value,
-                      isUtc: true)
-                  .toString());
-              var val = timeString.substring(0, timeString.length - 1);
-              result = DateTime.tryParse(val) ?? val;
-            } else {
-              result = DateTime.fromMillisecondsSinceEpoch(map2[0].value,
-                  isUtc: true);
-            }
+         if (map2[0].value is int) {
+            result =
+                DateTime.fromMillisecondsSinceEpoch(map2[0].value, isUtc: true)
+                    .toLocal();
           } else if (map2[0].value is String) {
-            if (map2[0].value.endsWith("Z")) {
-              var val = map2[0].value.substring(0, map2[0].value.length - 1);
-              result = DateTime.tryParse(val) ?? val;
+            result = DateTime.tryParse(map2[0].value)
+            if (result!=null) {
+              result = result.toLocal();
             } else {
-              result = DateTime.tryParse(map2[0].value) ?? map2[0].value;
+              result = map2[0].value;
             }
+            
+          
+          
           }
           break;
       }
