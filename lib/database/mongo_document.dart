@@ -54,20 +54,18 @@ class MongoDocument {
 
         // Convert 'Date' type
         case "date":
-         if (map2[0].value is int) {
+          if (map2[0].value is int) {
             result =
                 DateTime.fromMillisecondsSinceEpoch(map2[0].value, isUtc: true)
                     .toLocal();
           } else if (map2[0].value is String) {
-            result = DateTime.tryParse(map2[0].value)
-            if (result!=null) {
+            result = DateTime.tryParse(map2[0].value);
+
+            if (result != null) {
               result = result.toLocal();
             } else {
               result = map2[0].value;
             }
-            
-          
-          
           }
           break;
       }
